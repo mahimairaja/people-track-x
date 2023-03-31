@@ -2,8 +2,8 @@
 env
 __pycache__
 model
-app/Input.*
-app/result.*
-app/output.*
-app/signal.json
-app/density.csv
+app/data/Input.*
+app/data/result.*
+app/data/output.*
+app/data/signal.json
+app/data/density.csv
