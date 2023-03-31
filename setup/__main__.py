@@ -1,5 +1,3 @@
-# env/lib/python3.10/site-packages/ultralytics/yolo/engine/model.py
-
 import subprocess, re, os, requests
 
 def find_script():
@@ -16,7 +14,7 @@ def find_script():
 
     version = subprocess.check_output(['python', '--version'], universal_newlines=True)
     version = version.strip().replace(" ","").lower()
-    version = re.sub(r"\.9$", "", version)
+    version = version.rsplit('.', 1)[0]
 
     file_path = f"{env_name}/lib/{version}/site-packages/ultralytics/yolo/engine/model.py"
 
@@ -29,7 +27,7 @@ def download_script(savepath):
     if response.status_code == 200:
         with open(savepath, 'wb') as f:
             f.write(response.content)
-        print('Successfully completed the setup ✅')
+        print('Algorithm configured to utilze threshold value for predictions ✅ ')
     else:
         print(f'Error downloading file: {response.status_code}❌')
 

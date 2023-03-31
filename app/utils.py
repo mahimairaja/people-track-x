@@ -1,7 +1,6 @@
 import pandas as pd
 import cv2, os
-import argparse
-from ultralytics import YOLO
+import argparse, subprocess
 import supervision as sv
 import numpy as np
 import time, csv, json
@@ -23,8 +22,17 @@ def initial_setup()-> None :
     state = checkStart()
     if state == 1:
         download_model()
+        download_script()
         doneSetup()
     main()
+
+
+def download_script():
+    working_directory = '..'
+    os.chdir(working_directory)
+    result = subprocess.run(['python', '-m', 'setup'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print(result.stdout.decode('utf-8'))
+    os.chdir(os.path.join(os.getcwd() + '/app'))
 
 def download_model():
     if not os.path.exists('model'):
@@ -38,7 +46,7 @@ def download_model():
         open('model/model.pt', 'wb').write(r.content)
         r.close()
 
-        print("Initial Setup Completed! 🪄")
+        print("Model is ready to do magic! 🪄 - Downloaded succssfully")
 
 def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='Crowd detection')
@@ -53,6 +61,7 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def main():
+    from ultralytics import YOLO
     global args, model, frame_count, startSeconds, firstFrame, \
         videoFPS, videoHeight, videoWidth, fps_set
     args = parse_arguments()
@@ -121,6 +130,7 @@ def writeCSV(startSeconds, count):
         csvwriter.writerow([startSeconds, count])
 
 def detect(imgPath, confidence = 0.4) -> int:
+    from ultralytics import YOLO
     args = parse_arguments()
     frame_width, frame_height = args.webcam_resolution
     model = YOLO(model='model/model.pt', conf=confidence)
