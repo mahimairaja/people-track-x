@@ -1,18 +1,23 @@
 import streamlit as st
-import matplotlib.pyplot as plt
 from PIL import Image 
-import cv2
-import json
-from utils import detect, detectVideo, getDataframe
-from utils import getProcessCount, setProcessCount, resetProcessCount
-from utils import initial_setup
+from utils.modules import detect, detectVideo, getDataframe
+from utils.modules import getFlag, setFlag, resetFlag
+from utils.modules import initial_setup
 
 
 @st.cache_data
 def convert_df(df):
+    """
+        Reads the counts dataframe and
+        returns in CSV format.
+    """
     return df.to_csv().encode('utf-8')
 
 def processImage():
+    """
+        UI Part if the users chooses
+        to proceess a image.
+    """
     threhold = st.slider('Choose a threshold value', 0.0, 1.0, 0.40)
     image_file = st.file_uploader("Upload An Image",type=['png','jpeg','jpg'])
     if image_file is not None:
@@ -21,7 +26,7 @@ def processImage():
         input_file_name = f"data/Input.{file_type}"
         with open(input_file_name,mode = "wb") as f: 
             f.write(image_file.getbuffer())    
-        first_process = int(getProcessCount())
+        first_process = int(getFlag())
         count = detect(input_file_name, confidence=threhold)
         img_ = Image.open("data/result.jpg")
         st.subheader(f"People Count = {count}")
@@ -35,6 +40,10 @@ def processImage():
                 ) 
 
 def processVideo():
+    """
+        UI Part if the users chooses
+        to proceess a video.
+    """
     threhold = st.slider('Choose a threshold value', 0.0, 1.0, 0.40)
     uploaded_video = st.file_uploader("Upload a Video", type = ['mp4','mpeg','mov'])
     if uploaded_video is not None :
@@ -47,12 +56,12 @@ def processVideo():
                 
             st_video = open(vid,'rb')
             video_bytes = st_video.read()
-            first_process = int(getProcessCount())
+            first_process = int(getFlag())
             if first_process == 1:
                 with st.spinner('Processing the video ⌛️'):
                     detectVideo(vid, confidence=threhold)
-                setProcessCount()
-                first_process = int(getProcessCount())
+                setFlag()
+                first_process = int(getFlag())
             st_video = open('data/output.mp4','rb')
             video_bytes = st_video.read()
             st.video(video_bytes)
@@ -81,6 +90,9 @@ def processVideo():
 
 
 def main():
+        """
+            UI Part of the entire application.
+        """
         st.set_page_config(
             page_title ="Track-X",
             page_icon = "🧊",
@@ -98,7 +110,7 @@ def main():
             processImage()
         else:
             st.title('Video Analysis')
-            st.button("Reset", on_click=resetProcessCount)
+            st.button("Reset", on_click=resetFlag)
             processVideo()
 
         with st.expander("About People Track-X"):
@@ -109,5 +121,15 @@ def main():
                     on a particular place.</p>', unsafe_allow_html=True)
 
 if __name__ == '__main__':
+    __author__ = 'Mahimai Raja J'
+    __version__ = "1.0.0"
     initial_setup()
     main()
+
+# 📌 NOTE :
+# Do not modify the credits unless you have 
+# legal permission from the authorizing authority .
+
+# Thank you for helping to maintain the integrity of the 
+# open source community by promoting fair and ethical 
+# use of open source software 💎.

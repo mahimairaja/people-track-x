@@ -7,6 +7,10 @@ import time, csv, json
 import datetime, requests
 
 def initial_setup()-> None :
+    """
+        Initializes the data folder, csv file 
+        and signal json files.
+    """
     if not os.path.exists('data') :
         os.makedirs('data')
     if not os.path.exists("data/density.csv") : 
@@ -21,13 +25,25 @@ def initial_setup()-> None :
             outfile.close()
     state = checkStart()
     if state == 1:
-        download_model()
-        download_script()
+        try :
+            download_model()
+        except :
+            print("⛔️ 1.Unable to download the model.")
+        try :
+            download_script()
+        except :
+            print("Warning ! ")
+            print("❕ 2.Unable to implement the algorithm.")
+            print("Kindly ignore if you are excuting the application inside the provided container.")
         doneSetup()
     main()
 
 
 def download_script():
+    """
+        Downloads the customized algorithm to modify 
+        the ultralytics package installed.
+    """
     working_directory = '..'
     os.chdir(working_directory)
     result = subprocess.run(['python', '-m', 'setup'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -35,6 +51,10 @@ def download_script():
     os.chdir(os.path.join(os.getcwd() + '/app'))
 
 def download_model():
+    """
+        Downloads the trained yolov8 model 🚀
+        to detect person class.
+    """
     if not os.path.exists('model'):
         os.makedirs('model')
 
@@ -49,6 +69,9 @@ def download_model():
         print("Model is ready to do magic! 🪄 - Downloaded succssfully")
 
 def parse_arguments() -> argparse.Namespace:
+    """
+        Initializes the commandline argument parser.
+    """
     parser = argparse.ArgumentParser(description='Crowd detection')
     parser.add_argument(
         '--webcam-resolution',
@@ -61,6 +84,9 @@ def parse_arguments() -> argparse.Namespace:
 
 
 def main():
+    """
+        Initializes the global variables to use in other methods.
+    """
     from ultralytics import YOLO
     global args, model, frame_count, startSeconds, firstFrame, \
         videoFPS, videoHeight, videoWidth, fps_set
@@ -77,6 +103,10 @@ def main():
 
 
 def process_frame(frame : np.ndarray, _) -> np.ndarray: 
+    """
+        Processes the frame and return the processed frame
+        with bounding boxex and labels from 'frame'
+    """
     ZONE_SIDES = np.array([
     [0,0],
     [videoWidth, 0],
@@ -87,6 +117,9 @@ def process_frame(frame : np.ndarray, _) -> np.ndarray:
     zone = sv.PolygonZone(polygon=ZONE_SIDES, frame_resolution_wh=tuple(args.webcam_resolution))
     
     start_time = time.time()
+    
+    from ultralytics import YOLO
+    model = YOLO(model='model/model.pt', conf=thresh)
     results = model(frame, imgsz=1280)[0]
     detections = sv.Detections.from_yolov8(results)
     detections = detections[detections.class_id == 0]
@@ -100,6 +133,7 @@ def process_frame(frame : np.ndarray, _) -> np.ndarray:
         for _, confidence, class_id,_ 
         in detections
     ]
+    
     frame = box_annotator.annotate(scene=frame, detections=detections, labels=labels)
     frame = zone_annotator.annotate(scene=frame)
     
@@ -125,11 +159,19 @@ def process_frame(frame : np.ndarray, _) -> np.ndarray:
     return frame
 
 def writeCSV(startSeconds, count):
+    """
+        Writes the counts into a csv file 
+        using 'Time' and 'Counts'.
+    """
     with open('data/density.csv', mode='a', newline='') as csvfile:
         csvwriter = csv.writer(csvfile)
         csvwriter.writerow([startSeconds, count])
 
 def detect(imgPath, confidence = 0.4) -> int:
+    """
+        Detects the person in a image using
+        'Image path' and 'Threshold confidence'
+    """
     from ultralytics import YOLO
     args = parse_arguments()
     frame_width, frame_height = args.webcam_resolution
@@ -173,8 +215,13 @@ def detect(imgPath, confidence = 0.4) -> int:
     return len(labels)
 
 def detectVideo(videoPath, confidence=0.4) :
+    """
+        Detects the person in a Video using
+        'Video path' and 'Threshold confidence'
+    """
     video_info = sv.VideoInfo.from_video_path(videoPath)
-    global videoFPS, videoWidth, videoHeight
+    global videoFPS, videoWidth, videoHeight, thresh
+    thresh = confidence
     videoFPS = video_info.fps
     videoHeight = video_info.height
     videoWidth = video_info.width
@@ -186,16 +233,27 @@ def detectVideo(videoPath, confidence=0.4) :
     sv.process_video(source_path=videoPath, target_path="data/output.mp4", callback=process_frame)
     
 def getDataframe():
+    """
+        Reads and returns the dataframe from csv file
+    """
     df = pd.read_csv('data/density.csv')
     return df
 
 def checkStart() :
+    """
+        Reads and return the flag status 
+        from signal file.
+    """
     f = open('data/signal.json','r')
     data = json.load(f)
     f.close()
     return data['initiate']
 
 def doneSetup():
+    """
+        Reads and Turn the Flag to off,
+        to indicate that initial setup is done
+    """
     f = open('data/signal.json','r')
     data = json.load(f)
     f.close()
@@ -204,13 +262,20 @@ def doneSetup():
         json.dump(data, outfile)
         outfile.close()
 
-def getProcessCount():
+def getFlag():
+    """
+        Reads and return the flag value,
+    """
     f = open('data/signal.json','r')
     data = json.load(f)
     f.close()
     return data['Flag']
 
-def setProcessCount():
+def setFlag():
+    """
+        Reads and Sets the Flag to Off,
+        To restrict processing the video.
+    """
     f = open('data/signal.json','r')
     data = json.load(f)
     f.close()
@@ -219,7 +284,11 @@ def setProcessCount():
         json.dump(data, outfile)
         outfile.close()
 
-def resetProcessCount():
+def resetFlag():
+    """
+        Reads and Sets the Flag to On,
+        To allow processing the video.
+    """
     f = open('data/signal.json','r')
     data = json.load(f)
     f.close()

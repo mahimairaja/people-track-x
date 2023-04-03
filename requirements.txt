@@ -65,4 +65,3 @@ ultralytics==8.0.57
 urllib3==1.26.15
 validators==0.20.0
 zipp==3.15.0
-opencv-python-headless==4.6.0.66
