@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=600px height=250px src="asset/header.png" alt="Project logo"></a>
+ <img width=1200px height=550px src="asset/header.png" alt="Project logo"></a>
 </p>
 <h3 align="center">People <span style="color : #9eeade">Track-X</span></h3>
 
@@ -24,11 +24,12 @@
 <img src='asset/webpage.jpg'>
 </details>
 
-
-<figure align="center" >
+<div align="center" >
   <img src="asset/graph.png" alt="Graph" width=600px height=350px>
-  <figcaption>Line Plot - Time vs Count.</figcaption>
-</figure>
+  
+  
+  <p>Line Plot - Time vs Count.</p>
+</div>
 
 ## Quick Start 🚀 :
 
