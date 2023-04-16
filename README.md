@@ -98,9 +98,12 @@ docker run -p 8501:8501 people-track-x
 1. Object Tracking - Byte Tracker
 
 ---
-Thank you visiting !
 
-Reach me 📩 - [Mahimai Raja J](https://www.linkedin.com/in/mahimairaja/) 
+### Acknowledgements
+
+Special thanks to [Dr.Kumudha Raimond](#) for their invaluable guidance and support throughout the development of this project who has completed their PhD at the Indian Institute of Technology (IIT), Madras. 
+
+---
 
 ## Licence <a name = "license"></a>
 
@@ -109,6 +112,16 @@ The contents of this project are Copyright (c) [Mahimai Raja J](https://www.link
 All rights reserved.
 
 
-    While using kindly provide attribution by citing this repository.
+`While using kindly provide attribution by citing this repository.`
 
 
+    @Citation{People-Track-X,
+    Owner : Mahimai Raja J,
+    repository : https://github.com/mahimairaja/People-Track-X,
+    Year : 2023
+    }
+
+
+Thank you visiting !
+
+Reach me 📩 - [Mahimai Raja J](https://www.linkedin.com/in/mahimairaja/) 
