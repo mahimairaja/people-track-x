@@ -1,8 +1,8 @@
-<p align="center">
-  <a href="" rel="noopener">
- <img width=1200px height=550px src="asset/header.png" alt="Project logo"></a>
+<h1 align="center">People <span style="color : #9eeade">Track-X</span></h1>
+
+<p align="center" style="padding-left : 50px;padding-right : 50px; font-style : italic">
+“An effienct way of crowd density analysis”
 </p>
-<h3 align="center">People <span style="color : #9eeade">Track-X</span></h3>
 
 <div align="center">
 
@@ -10,12 +10,17 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
+<p align="center">
+  <a href="" rel="noopener">
+ <img width=1200px height=450px src="asset/header.jpg" alt="Project logo"></a>
+</p>
+<div align="center">
+<p>Fig - An AI Generated Image</p>
+</div>
 
 ---
 
-<p align="center" style="padding-left : 50px;padding-right : 50px;">
-“An effienct way of crowd density analysis”
-</p>
+
 
 
 <details>
@@ -115,10 +120,10 @@ All rights reserved.
 `While using kindly provide attribution by citing this repository.`
 
 
-    @Citation{People-Track-X,
-    Owner : Mahimai Raja J,
-    repository : https://github.com/mahimairaja/People-Track-X,
-    Year : 2023
+    @Inproceedings{People-Track-X,
+    Authors : {Mr.Mahimai Raja J, Dr.Kumudha Raimond},
+    repository : {https://github.com/mahimairaja/People-Track-X},
+    Year : {2023}
     }
 
 
