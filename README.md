@@ -10,13 +10,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
-<p align="center">
-  <a href="" rel="noopener">
- <img width=1200px height=450px src="asset/header.jpg" alt="Project logo"></a>
-</p>
-<div align="center">
-<p>Fig - An AI Generated Image</p>
-</div>
+
 
 ---
 
