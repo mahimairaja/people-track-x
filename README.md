@@ -11,11 +11,9 @@
 
 </div>
 
+People Track-X is an advanced computer vision solution designed to address crowd detection and people counting challenges. Leveraging the power of YOLOv8 and ByteTracker algorithms, this innovative system accurately analyzes video streams from specific cameras to provide real-time insights into crowd dynamics. The system is designed to work seamlessly with existing camera infrastructure, enabling easy deployment and integration into surveillance systems
 
 ---
-
-
-
 
 <details>
 <summary> Website UI Look
@@ -100,7 +98,7 @@ docker run -p 8501:8501 people-track-x
 
 ### Acknowledgements
 
-Special thanks to [Dr.Kumudha Raimond](#) for their invaluable guidance and support throughout the development of this project who has completed their PhD at the Indian Institute of Technology (IIT), Madras. 
+Special thanks to [Dr.Kumudha Raimond](https://github.com/mahimairaja/People-Track-X/) for their invaluable guidance and support throughout the development of this project who has completed their PhD at the Indian Institute of Technology (IIT), Madras and to [Litisha Miraclin](https://github.com/mahimairaja/People-Track-X/) for their valued Collaboration.
 
 ---
 
@@ -115,7 +113,7 @@ All rights reserved.
 
 
     @Inproceedings{People-Track-X,
-    Authors : {Mr.Mahimai Raja J, Dr.Kumudha Raimond},
+    Authors : {Mr.Mahimai Raja J, Dr.Kumudha Raimond, Ms.Litisha Miraclin}, 
     repository : {https://github.com/mahimairaja/People-Track-X},
     Year : {2023}
     }
